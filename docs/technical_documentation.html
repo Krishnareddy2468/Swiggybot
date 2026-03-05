@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Swiggy Order Bot - Technical Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #1a1a2e;
+    line-height: 1.7;
+    font-size: 11pt;
+    padding: 0;
+    background: #fff;
+  }
+  
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 50px 60px;
+  }
+  
+  .cover {
+    text-align: center;
+    padding: 120px 40px 80px;
+    page-break-after: always;
+  }
+  
+  .cover h1 {
+    font-size: 32pt;
+    font-weight: 700;
+    color: #fc8019;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  
+  .cover .subtitle {
+    font-size: 14pt;
+    color: #475569;
+    margin-bottom: 60px;
+    font-weight: 400;
+  }
+  
+  .cover .meta {
+    font-size: 11pt;
+    color: #64748b;
+    line-height: 2;
+  }
+  
+  .cover .meta strong {
+    color: #1a1a2e;
+  }
+  
+  h2 {
+    font-size: 16pt;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #fc8019;
+  }
+  
+  h3 {
+    font-size: 12pt;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+  
+  p { margin-bottom: 12px; }
+  
+  ul, ol {
+    margin-bottom: 14px;
+    padding-left: 24px;
+  }
+  
+  li { margin-bottom: 4px; }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 20px;
+    font-size: 10pt;
+  }
+  
+  th {
+    background: #f1f5f9;
+    font-weight: 600;
+    text-align: left;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+  }
+  
+  td {
+    padding: 7px 12px;
+    border: 1px solid #e2e8f0;
+  }
+  
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+  
+  code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 9.5pt;
+  }
+  
+  pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 16px 20px;
+    border-radius: 6px;
+    font-size: 9pt;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin: 12px 0 18px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  
+  .arch-diagram {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 16px 0;
+    font-family: 'SF Mono', monospace;
+    font-size: 8.5pt;
+    line-height: 1.4;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  
+  .highlight {
+    background: #fff7ed;
+    border-left: 3px solid #fc8019;
+    padding: 12px 16px;
+    margin: 14px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  
+  .page-break { page-break-before: always; }
+  
+  .toc { margin: 20px 0; }
+  .toc li { margin-bottom: 6px; }
+  .toc a { color: #1a1a2e; text-decoration: none; }
+
+  .flow-box {
+    display: inline-block;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 4px 10px;
+    margin: 2px;
+    font-size: 9pt;
+    font-weight: 500;
+  }
+  
+  .flow-arrow {
+    display: inline-block;
+    margin: 0 4px;
+    color: #94a3b8;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <h1>Swiggy Order Bot</h1>
+  <div class="subtitle">AI-Powered Restaurant Ordering Assistant</div>
+  <div class="subtitle" style="font-size:11pt; color:#94a3b8;">Technical Documentation</div>
+  
+  <div style="margin-top: 80px;">
+    <div class="meta">
+      <strong>Position:</strong> AI Full-Stack Developer<br>
+      <strong>Assignment:</strong> AI Restaurant Order Automation<br>
+      <strong>Stack:</strong> FastAPI + Next.js + Google Gemini + Telegram<br>
+      <strong>Repository:</strong> github.com/Krishnareddy2468/Swiggybot
+    </div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="page">
+  <h2>Table of Contents</h2>
+  <ol class="toc">
+    <li>Technical Overview</li>
+    <li>System Architecture</li>
+    <li>API Integration Approach</li>
+    <li>Core Features</li>
+    <li>Conversation Flow & State Machine</li>
+    <li>AI Intent Detection Pipeline</li>
+    <li>API Endpoints Reference</li>
+    <li>Project Structure</li>
+    <li>Setup & Testing Instructions</li>
+    <li>Challenges & Solutions</li>
+  </ol>
+</div>
+
+<!-- SECTION 1 -->
+<div class="page page-break">
+  <h2>1. Technical Overview</h2>
+  
+  <p>This project is a conversational AI bot that automates food ordering from Swiggy. Users interact with the bot through natural language &mdash; either via a web-based chat interface or Telegram &mdash; and the bot handles the entire ordering workflow: searching restaurants, browsing menus, managing a cart, placing orders, and tracking delivery status.</p>
+  
+  <h3>Key Design Decisions</h3>
+  
+  <table>
+    <tr><th>Decision</th><th>Choice</th><th>Rationale</th></tr>
+    <tr><td>Backend Framework</td><td>FastAPI (Python)</td><td>Native async support, automatic OpenAPI docs, Pydantic validation built-in</td></tr>
+    <tr><td>Frontend</td><td>Next.js (React)</td><td>Server-side rendering, fast HMR during development, component architecture</td></tr>
+    <tr><td>AI Engine</td><td>Google Gemini 2.0 Flash</td><td>Low latency (~500ms), strong at structured JSON extraction, free tier available</td></tr>
+    <tr><td>Chat Platform</td><td>Telegram Bot API</td><td>Well-documented, no approval needed (unlike WhatsApp Business API), rich formatting</td></tr>
+    <tr><td>Data Layer</td><td>In-memory + JSON file</td><td>Sufficient for prototype; sessions in-memory, orders persisted to disk</td></tr>
+    <tr><td>Food Platform</td><td>Mock Swiggy MCP</td><td>Swiggy has no public API; mock data simulates realistic restaurant/menu data</td></tr>
+  </table>
+  
+  <h3>What the Bot Can Do</h3>
+  <ul>
+    <li>Search restaurants by location, cuisine type, or name</li>
+    <li>Display menus with numbered items, prices, veg/non-veg indicators, and bestseller tags</li>
+    <li>Accept orders via item numbers, item names, or natural language ("add 2 margherita")</li>
+    <li>Manage a shopping cart (add, remove, update quantity, view totals with GST)</li>
+    <li>Complete checkout with delivery address and order confirmation</li>
+    <li>Simulate order tracking with status progression and delivery partner assignment</li>
+    <li>Fall back to keyword parsing when the AI API is unavailable</li>
+  </ul>
+</div>
+
+<!-- SECTION 2 -->
+<div class="page page-break">
+  <h2>2. System Architecture</h2>
+  
+  <div class="arch-diagram">
+                    +------------------+     +------------------+
+                    |   Telegram App   |     |  Web Chat (Next) |
+                    +--------+---------+     +--------+---------+
+                             |                        |
+                    Telegram Bot API            HTTP REST API
+                             |                        |
+                    +--------v------------------------v---------+
+                    |              FastAPI Backend               |
+                    |                (Port 8000)                 |
+                    +-------------------------------------------+
+                    |                                           |
+                    |   +------------+    +-----------------+   |
+                    |   | Chat Route |    | Restaurant Route|   |
+                    |   +-----+------+    +--------+--------+   |
+                    |         |                    |             |
+                    |   +-----v--------------------v--------+   |
+                    |   |         Gemini AI Agent            |   |
+                    |   |  (Intent Detection + NLU Engine)   |   |
+                    |   +--+----------+----------+----------+   |
+                    |      |          |          |              |
+                    |  +---v---+ +----v----+ +---v----------+  |
+                    |  |Session| |Order    | |Restaurant    |  |
+                    |  |Service| |Service  | |Service       |  |
+                    |  +---+---+ +----+----+ +---+----------+  |
+                    |      |          |          |              |
+                    +------+----------+----------+--------------+
+                           |          |          |
+                    +------v---+ +----v----+ +---v--------------+
+                    |In-Memory | |JSON File| |Mock Swiggy Data  |
+                    |Sessions  | |Orders   | |10 Restaurants    |
+                    +----------+ +---------+ +------------------+</div>
+  
+  <h3>Component Responsibilities</h3>
+  
+  <table>
+    <tr><th>Component</th><th>Role</th></tr>
+    <tr><td><code>main.py</code></td><td>FastAPI app setup, CORS configuration, Telegram bot lifecycle</td></tr>
+    <tr><td><code>gemini_agent.py</code></td><td>Core NLU engine. Sends messages to Gemini with context, parses intent + entities, routes to handlers</td></tr>
+    <tr><td><code>session_service.py</code></td><td>Manages per-user state: conversation history, cart, selected restaurant, delivery address</td></tr>
+    <tr><td><code>order_service.py</code></td><td>Order placement, status tracking, delivery simulation with background tasks</td></tr>
+    <tr><td><code>restaurant_service.py</code></td><td>Restaurant search (fuzzy matching), menu retrieval, item lookup</td></tr>
+    <tr><td><code>telegram_bot.py</code></td><td>Telegram integration: command handlers, message routing, markdown formatting</td></tr>
+    <tr><td><code>swiggy_data.py</code></td><td>Mock data layer: 10 restaurants, 150+ items, Hyderabad locations</td></tr>
+  </table>
+</div>
+
+<!-- SECTION 3 -->
+<div class="page page-break">
+  <h2>3. API Integration Approach</h2>
+  
+  <p>The assignment required integrating with Swiggy or Zomato via their MCP servers or public APIs. Since neither platform provides a publicly accessible API for third-party ordering, I implemented a <strong>Mock Swiggy MCP Server</strong> that simulates the data layer.</p>
+  
+  <h3>Mock Data Design</h3>
+  <ul>
+    <li><strong>10 restaurants</strong> with real brand names (Domino's, Pizza Hut, Meghana Foods, McDonald's, etc.)</li>
+    <li><strong>150+ menu items</strong> with realistic prices, descriptions, ratings, veg/non-veg flags</li>
+    <li><strong>15 Hyderabad locations</strong> (Madhapur, HITEC City, Gachibowli, Banjara Hills, etc.)</li>
+    <li><strong>18 cuisine types</strong> (Pizza, Biryani, Burgers, South Indian, Chinese, etc.)</li>
+    <li><strong>Delivery simulation</strong> with partner names, phone numbers, time estimates</li>
+  </ul>
+  
+  <h3>Restaurant Service API</h3>
+  <p>The <code>RestaurantService</code> class provides the same interface a real Swiggy API would:</p>
+  
+  <table>
+    <tr><th>Method</th><th>Equivalent Swiggy Endpoint</th></tr>
+    <tr><td><code>search_restaurants(query, location, cuisine)</code></td><td>GET /restaurants/search</td></tr>
+    <tr><td><code>get_restaurant_by_id(id)</code></td><td>GET /restaurants/{id}</td></tr>
+    <tr><td><code>get_menu(restaurant_id)</code></td><td>GET /restaurants/{id}/menu</td></tr>
+    <tr><td><code>find_menu_item(restaurant_id, query)</code></td><td>GET /menu/search</td></tr>
+    <tr><td><code>get_bestsellers(restaurant_id)</code></td><td>GET /restaurants/{id}/bestsellers</td></tr>
+  </table>
+  
+  <div class="highlight">
+    If Swiggy were to provide API access, swapping the mock service with a real HTTP client would only require changing the <code>restaurant_service.py</code> implementation. The rest of the system (AI agent, session management, frontend) would work unchanged.
+  </div>
+
+  <h2>4. Core Features</h2>
+  
+  <h3>Restaurant Discovery</h3>
+  <p>Users can search restaurants by location ("restaurants in Madhapur"), by cuisine ("pizza places"), by name ("find Domino's"), or any combination. Results show ratings, delivery time, cost for two, and available offers.</p>
+  
+  <h3>Menu Browsing</h3>
+  <p>Menus are displayed with numbered items organized by category. Users can filter for vegetarian items only. Each item shows its price, description, veg/non-veg flag, and bestseller badge if applicable.</p>
+  
+  <h3>Cart Management</h3>
+  <p>Items can be added by menu number (type "3"), by name ("add margherita"), or with quantity ("2 garlic bread"). Adding the same item again increments the quantity. The cart shows itemized totals with 5% GST and delivery fee.</p>
+  
+  <h3>Order Flow</h3>
+  <p>Checkout presents the order summary and asks for a delivery address. After address confirmation, the user reviews the final total and confirms. The system generates a unique order ID (e.g., SWG070575EAE2) and begins tracking simulation.</p>
+  
+  <h3>Order Tracking</h3>
+  <p>Orders progress through: Confirmed &rarr; Being Prepared &rarr; Out for Delivery &rarr; Delivered. The web chat shows a "Refresh Status" button. On Telegram, the bot sends push notifications as the status changes.</p>
+</div>
+
+<!-- SECTION 5 -->
+<div class="page page-break">
+  <h2>5. Conversation State Machine</h2>
+  
+  <p>The bot uses a finite state machine to track where each user is in the ordering flow. This ensures context-appropriate responses — for example, typing a number while viewing a restaurant list selects a restaurant, but typing a number while viewing a menu adds that item to cart.</p>
+  
+  <table>
+    <tr><th>State</th><th>Description</th><th>Expected Input</th></tr>
+    <tr><td>IDLE</td><td>Initial state, no active context</td><td>Search query, greeting, help</td></tr>
+    <tr><td>SEARCHING</td><td>Restaurant results are shown</td><td>Restaurant number or name</td></tr>
+    <tr><td>BROWSING_MENU</td><td>A restaurant menu is displayed</td><td>Item number, item name, veg filter</td></tr>
+    <tr><td>ORDERING</td><td>Items have been added to cart</td><td>More items, checkout, show cart</td></tr>
+    <tr><td>AWAITING_ADDRESS</td><td>Cart is ready, need address</td><td>Delivery address text</td></tr>
+    <tr><td>CONFIRMING_ORDER</td><td>Order summary shown, awaiting yes/no</td><td>"Yes" to confirm, "No" to cancel</td></tr>
+    <tr><td>ORDER_PLACED</td><td>Order is placed and tracking</td><td>Track status, new order</td></tr>
+  </table>
+  
+  <h2>6. AI Intent Detection Pipeline</h2>
+  
+  <p>Every user message goes through a two-stage processing pipeline:</p>
+  
+  <h3>Stage 1: Gemini AI Analysis</h3>
+  <p>The message is sent to Google Gemini along with a system prompt containing:</p>
+  <ul>
+    <li>Current conversation state</li>
+    <li>Selected restaurant and its menu (if applicable)</li>
+    <li>Current cart contents</li>
+    <li>Last 6 messages for conversation context</li>
+  </ul>
+  <p>Gemini returns a JSON object with the extracted intent and entities:</p>
+<pre>{
+  "intent": "add_to_cart",
+  "entities": {
+    "items": [{"name": "margherita pizza", "quantity": 2}]
+  },
+  "response_hint": "User wants to add 2 margherita pizzas"
+}</pre>
+
+  <h3>Stage 2: Fallback Parser</h3>
+  <p>If the Gemini API call fails (network error, rate limiting, invalid response), the system falls back to a keyword-based parser that uses:</p>
+  <ul>
+    <li>Word-level matching (not substring) for greetings and confirmations</li>
+    <li>State-aware defaults (menu state → add to cart, search state → select restaurant)</li>
+    <li>Location and cuisine keyword detection from the mock data</li>
+  </ul>
+  
+  <h3>Supported Intents</h3>
+  <table>
+    <tr><th>Intent</th><th>Trigger Examples</th></tr>
+    <tr><td>greet</td><td>"hi", "hello", "hey"</td></tr>
+    <tr><td>search_restaurants</td><td>"show pizza places in Madhapur"</td></tr>
+    <tr><td>select_restaurant</td><td>"1", "2" (after seeing list)</td></tr>
+    <tr><td>show_menu</td><td>"menu", "show menu"</td></tr>
+    <tr><td>add_to_cart</td><td>"add margherita", "3" (menu number)</td></tr>
+    <tr><td>show_cart</td><td>"cart", "my order"</td></tr>
+    <tr><td>checkout</td><td>"checkout", "place order"</td></tr>
+    <tr><td>provide_address</td><td>Any text when in AWAITING_ADDRESS state</td></tr>
+    <tr><td>confirm_order</td><td>"yes", "confirm"</td></tr>
+    <tr><td>track_order</td><td>"track", "order status"</td></tr>
+  </table>
+</div>
+
+<!-- SECTION 7-8 -->
+<div class="page page-break">
+  <h2>7. API Endpoints Reference</h2>
+  
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+    <tr><td>GET</td><td>/</td><td>Health check and service status</td></tr>
+    <tr><td>GET</td><td>/docs</td><td>Interactive Swagger documentation</td></tr>
+    <tr><td>POST</td><td>/api/chat/message</td><td>Send a message, receive bot response</td></tr>
+    <tr><td>GET</td><td>/api/chat/session/{user_id}</td><td>Retrieve session state</td></tr>
+    <tr><td>POST</td><td>/api/chat/reset/{user_id}</td><td>Reset user session</td></tr>
+    <tr><td>GET</td><td>/api/restaurants/</td><td>Search restaurants (query params: query, location, cuisine, veg_only)</td></tr>
+    <tr><td>GET</td><td>/api/restaurants/locations</td><td>List all available delivery locations</td></tr>
+    <tr><td>GET</td><td>/api/restaurants/cuisines</td><td>List all cuisine types</td></tr>
+    <tr><td>GET</td><td>/api/restaurants/{id}</td><td>Get full restaurant details with menu</td></tr>
+    <tr><td>GET</td><td>/api/restaurants/{id}/menu</td><td>Get menu with optional category/veg filter</td></tr>
+    <tr><td>GET</td><td>/api/restaurants/{id}/bestsellers</td><td>Get bestseller items</td></tr>
+  </table>
+
+  <h3>Chat Message Request/Response</h3>
+<pre>POST /api/chat/message
+Content-Type: application/json
+
+{
+  "message": "show me pizza places in madhapur",
+  "user_id": "web_1234567890",
+  "user_name": "Krishna"
+}
+
+Response:
+{
+  "response": "Here are the top restaurants...",
+  "state": "searching",
+  "cart_items": [],
+  "restaurant": null,
+  "order": null
+}</pre>
+
+  <h2>8. Project Structure</h2>
+<pre>Swiggybot/
+├── backend/
+│   ├── main.py                       # Entry point, CORS, lifecycle
+│   ├── requirements.txt
+│   └── app/
+│       ├── models/schemas.py         # Pydantic: Order, CartItem, Session
+│       ├── services/
+│       │   ├── gemini_agent.py       # AI agent (NLU + handlers)
+│       │   ├── session_service.py    # User session management
+│       │   ├── order_service.py      # Orders + delivery simulation
+│       │   ├── restaurant_service.py # Search + menu lookup
+│       │   └── telegram_bot.py       # Telegram integration
+│       ├── routes/
+│       │   ├── chat.py               # /api/chat/* endpoints
+│       │   └── restaurants.py        # /api/restaurants/* endpoints
+│       └── mock_data/
+│           └── swiggy_data.py        # 10 restaurants, 150+ items
+│
+├── frontend/
+│   └── app/
+│       ├── page.js                   # Chat UI component
+│       ├── layout.js                 # Root layout
+│       └── globals.css               # Dark theme CSS
+│
+├── .env.example
+├── .gitignore
+└── README.md</pre>
+</div>
+
+<!-- SECTION 9-10 -->
+<div class="page page-break">
+  <h2>9. Setup & Testing Instructions</h2>
+  
+  <h3>Prerequisites</h3>
+  <ul>
+    <li>Python 3.9 or higher</li>
+    <li>Node.js 18 or higher</li>
+    <li>Google Gemini API key (from aistudio.google.com)</li>
+    <li>Telegram Bot Token (from @BotFather on Telegram)</li>
+  </ul>
+  
+  <h3>Installation Steps</h3>
+<pre>git clone https://github.com/Krishnareddy2468/Swiggybot.git
+cd Swiggybot
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your GEMINI_API_KEY and TELEGRAM_BOT_TOKEN
+
+# Backend
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python main.py              # Runs on http://localhost:8000
+
+# Frontend (new terminal)
+cd frontend
+npm install
+npm run dev                 # Runs on http://localhost:3000</pre>
+
+  <h3>Testing on Web</h3>
+  <ol>
+    <li>Open http://localhost:3000 in your browser</li>
+    <li>Click a suggestion card or type "Show me restaurants in Madhapur"</li>
+    <li>Select a restaurant by typing its number</li>
+    <li>Add items by number (e.g., "3") or by name (e.g., "add chicken biryani")</li>
+    <li>Type "checkout" and follow the prompts</li>
+    <li>After placing an order, click "Refresh Status" to track progress</li>
+  </ol>
+  
+  <h3>Testing on Telegram</h3>
+  <ol>
+    <li>Search for your bot on Telegram (the username you set with @BotFather)</li>
+    <li>Send /start to begin the conversation</li>
+    <li>Use the same natural language as the web chat</li>
+  </ol>
+
+  <h2>10. Challenges & Solutions</h2>
+  
+  <h3>Challenge 1: Substring matching in fallback parser</h3>
+  <p>The keyword-based intent parser used substring matching, causing "hi" to match inside words like "Shahi" (as in "Shahi Gulab Jamun"). This incorrectly triggered a greeting response when the user was trying to order a menu item.</p>
+  <p><strong>Solution:</strong> Replaced substring matching with word-level set intersection. Also restructured the fallback logic to check the conversation state first — when a user is browsing a menu, any unrecognized input defaults to an add-to-cart action rather than falling through to greeting detection.</p>
+  
+  <h3>Challenge 2: Session persistence during development</h3>
+  <p>Uvicorn's auto-reload feature (useful during development) clears all in-memory sessions when backend files change. This caused cart data to disappear mid-conversation.</p>
+  <p><strong>Solution:</strong> Stored the user ID in the browser's sessionStorage so page reloads don't generate new session IDs. For production, sessions would be backed by Redis or a database.</p>
+  
+  <h3>Challenge 3: Gemini response format inconsistency</h3>
+  <p>Gemini occasionally wraps its JSON output in markdown code blocks, causing JSON parse errors.</p>
+  <p><strong>Solution:</strong> Added a preprocessing step that strips markdown fencing (```json ... ```) before parsing. If parsing still fails, the system gracefully falls back to the keyword-based parser.</p>
+  
+  <h3>Challenge 4: Telegram message length limits</h3>
+  <p>Menus with 20+ items exceed Telegram's 4096-character message limit.</p>
+  <p><strong>Solution:</strong> Messages are automatically split into chunks under 4000 characters. Markdown formatting is attempted first, with a plaintext fallback if Telegram rejects the markdown syntax.</p>
+</div>
+
+</body>
+</html>
