@@ -182,7 +182,7 @@ export default function Home() {
         ...prev,
         {
           role: "bot",
-          content: "Couldn't connect to the server. Make sure the backend is running on http://localhost:8000\n\nRun: `cd backend && source venv/bin/activate && python main.py`",
+          content: `Couldn't connect to the server. Make sure the backend is running on ${API_URL}`,
           time: timeNow(),
         },
       ]);
