@@ -1,9 +1,12 @@
-fastapi==0.115.6
+fastapi==0.135.1
 uvicorn[standard]==0.34.0
 python-telegram-bot==21.9
 google-generativeai==0.8.4
+openai==2.26.0
+mcp==1.26.0
 python-dotenv==1.0.1
-pydantic==2.10.4
+pydantic==2.12.5
 httpx==0.28.1
 python-multipart==0.0.20
 websockets==14.1
+sse-starlette==3.3.2
