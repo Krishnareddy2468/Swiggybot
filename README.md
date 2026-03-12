@@ -1,4 +1,4 @@
-# Zomato Order Bot — AI Restaurant Ordering Assistant
+# Food Order Bot — AI Restaurant Ordering Assistant
 
 An AI-powered food ordering bot that lets users browse restaurants, view menus, and place orders through natural conversation. Built with FastAPI, Next.js, Google Gemini AI, and Telegram Bot API.
 
